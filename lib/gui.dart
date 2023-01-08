@@ -1,3 +1,4 @@
+import 'package:financial_management/finance.dart';
 import 'package:flutter/material.dart';
 
 class DialogItem extends StatelessWidget {
@@ -47,4 +48,94 @@ class FinancialMoveWidget extends StatelessWidget {
           children: [Text(descriptor), Text(balance)]),
     );
   }
+}
+
+class MoveDialog extends StatelessWidget {
+  const MoveDialog({super.key, required this.title, required this.cart});
+
+  final String title;
+  final CartModel cart;
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController descriptor = TextEditingController();
+    TextEditingController balance = TextEditingController();
+    return AlertDialog(
+      title: Text(title),
+      content: Column(
+        children: [
+          TextField(
+            controller: descriptor,
+          ),
+          TextField(
+            controller: balance,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        TextButton(
+          child: const Text("Move"),
+          onPressed: () {
+            Navigator.pop(context);
+            cart.add(FinancialMove(
+                descriptor: descriptor.value.toString(),
+                balance: int.parse(balance.value.toString())));
+          },
+        )
+      ],
+    );
+  }
+}
+
+void showPromptMoveDialog(BuildContext context, String title, CartModel cart) {
+  showDialog<void>(
+      context: context,
+      builder: (context) => MoveDialog(
+            title: title,
+            cart: cart,
+          ));
+}
+
+void showMoveDialog(BuildContext context, CartModel cart) {
+  showDialog<void>(
+      context: context,
+      useSafeArea: false,
+      builder: (BuildContext context) {
+        return SimpleDialog(title: const Text("Make move"), children: [
+          DialogItem(
+              icon: Icons.account_balance,
+              text: "Add balance",
+              onPressed: () {
+                Navigator.pop(context);
+                showPromptMoveDialog(context, "Add balance", cart);
+              }),
+          DialogItem(
+              icon: Icons.shopping_cart,
+              text: "Subtract balance",
+              onPressed: () {
+                Navigator.pop(context);
+                showPromptMoveDialog(context, "Subtract balance", cart);
+              }),
+          DialogItem(
+              icon: Icons.person,
+              text: "Lend balance",
+              onPressed: () {
+                Navigator.pop(context);
+                showPromptMoveDialog(context, "Lend balance", cart);
+              }),
+          DialogItem(
+              icon: Icons.attach_money,
+              text: "Borrow balance",
+              onPressed: () {
+                Navigator.pop(context);
+                showPromptMoveDialog(context, "Borrow balance", cart);
+              }),
+        ]);
+      });
 }
