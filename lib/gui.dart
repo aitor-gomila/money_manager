@@ -63,6 +63,7 @@ class MoveDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(title),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: descriptor,
