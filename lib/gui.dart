@@ -51,10 +51,15 @@ class FinancialMoveWidget extends StatelessWidget {
 }
 
 class MoveDialog extends StatelessWidget {
-  const MoveDialog({super.key, required this.title, required this.cart});
+  const MoveDialog(
+      {super.key,
+      required this.title,
+      required this.cart,
+      required this.onMove});
 
   final String title;
   final CartModel cart;
+  final Function(String descriptor, int balance) onMove;
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +92,7 @@ class MoveDialog extends StatelessWidget {
           child: const Text("Move"),
           onPressed: () {
             Navigator.pop(context);
-            cart.add(FinancialMove(
-                descriptor: descriptor.text, balance: int.parse(balance.text)));
+            onMove(descriptor.text, int.parse(balance.text));
           },
         )
       ],
@@ -96,12 +100,14 @@ class MoveDialog extends StatelessWidget {
   }
 }
 
-void showPromptMoveDialog(BuildContext context, String title, CartModel cart) {
+void showPromptMoveDialog(BuildContext context, CartModel cart, String title,
+    Function(String, int) onMove) {
   showDialog<void>(
       context: context,
       builder: (context) => MoveDialog(
             title: title,
             cart: cart,
+            onMove: onMove,
           ));
 }
 
@@ -113,31 +119,31 @@ void showMoveDialog(BuildContext context, CartModel cart) {
         return SimpleDialog(title: const Text("Make move"), children: [
           DialogItem(
               icon: Icons.account_balance,
-              text: "Add balance",
+              text: "Add/subtract balance",
               onPressed: () {
                 Navigator.pop(context);
-                showPromptMoveDialog(context, "Add balance", cart);
-              }),
-          DialogItem(
-              icon: Icons.shopping_cart,
-              text: "Subtract balance",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(context, "Subtract balance", cart);
+                showPromptMoveDialog(
+                    context,
+                    cart,
+                    "Add/subtract balance",
+                    (descriptor, balance) => cart.add(FinancialMove(
+                        descriptor: descriptor, balance: balance)));
               }),
           DialogItem(
               icon: Icons.person,
               text: "Lend balance",
               onPressed: () {
                 Navigator.pop(context);
-                showPromptMoveDialog(context, "Lend balance", cart);
+                showPromptMoveDialog(
+                    context, cart, "Lend balance", (descriptor, balance) {});
               }),
           DialogItem(
               icon: Icons.attach_money,
               text: "Borrow balance",
               onPressed: () {
                 Navigator.pop(context);
-                showPromptMoveDialog(context, "Borrow balance", cart);
+                showPromptMoveDialog(
+                    context, cart, "Borrow balance", (descriptor, balance) {});
               }),
         ]);
       });
