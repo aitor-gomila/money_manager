@@ -66,9 +66,12 @@ class MoveDialog extends StatelessWidget {
         children: [
           TextField(
             controller: descriptor,
+            decoration: const InputDecoration(labelText: 'Description'),
           ),
           TextField(
             controller: balance,
+            decoration: const InputDecoration(labelText: 'Balance (+/-)'),
+            keyboardType: TextInputType.number,
           ),
         ],
       ),
@@ -84,8 +87,7 @@ class MoveDialog extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
             cart.add(FinancialMove(
-                descriptor: descriptor.value.toString(),
-                balance: int.parse(balance.value.toString())));
+                descriptor: descriptor.text, balance: int.parse(balance.text)));
           },
         )
       ],
