@@ -45,17 +45,13 @@ class FinancialMoveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(descriptor),
-                Text('${balance > 0 ? '+' : ''}$balance$currency')
-              ]),
-        ));
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(descriptor),
+        Text('${balance > 0 ? '+' : ''}$balance$currency')
+      ]),
+    );
   }
 }
 
