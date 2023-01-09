@@ -47,6 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgetOptions = [
+      const BalanceRoute(),
+      const Center(child: Text("Debt")),
+      const Center(
+        child: Text("Borrow"),
+      )
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Financial Moves"),
@@ -62,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.add),
         );
       }),
-      body: const BalanceRoute(),
+      body: widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
