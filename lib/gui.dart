@@ -130,7 +130,7 @@ void showMoveDialog(BuildContext context, CartModel cart) {
                         descriptor: descriptor, balance: balance)));
               }),
           DialogItem(
-              icon: Icons.person,
+              icon: Icons.attach_money,
               text: "Lend balance",
               onPressed: () {
                 Navigator.pop(context);
@@ -138,12 +138,12 @@ void showMoveDialog(BuildContext context, CartModel cart) {
                     context, cart, "Lend balance", (descriptor, balance) {});
               }),
           DialogItem(
-              icon: Icons.attach_money,
-              text: "Borrow balance",
+              icon: Icons.person,
+              text: "Balance exception",
               onPressed: () {
                 Navigator.pop(context);
-                showPromptMoveDialog(
-                    context, cart, "Borrow balance", (descriptor, balance) {});
+                showPromptMoveDialog(context, cart, "Balance exception",
+                    (descriptor, balance) {});
               }),
         ]);
       });
