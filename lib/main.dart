@@ -53,30 +53,30 @@ class _MyHomePageState extends State<MyHomePage> {
             body: Consumer<CartModel>(
               builder: (context, cart, child) {
                 List<FinancialMove> cartItems = cart.items.reversed.toList();
-                return Column(children: [
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 50),
-                      // Shows current balance with a nice + or - sign
-                      child: Text(
-                        '${cart.total}${cart.currency}',
-                        style: Theme.of(context).textTheme.headline4,
-                      )),
-                  // Shows all moves in a nice list
-                  Expanded(
-                      child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: cartItems.length,
-                    itemBuilder: (context, index) {
-                      FinancialMove item = cartItems[index];
-                      return FinancialMoveWidget(
-                        descriptor: item.descriptor,
-                        balance: item.balance.toString(),
-                      );
-                    },
-                  )),
-                ]);
+                return Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 50),
+                        // Shows current balance with a nice + or - sign
+                        child: Text(
+                          '${cart.total > 0 ? '+' : ''}${cart.total}${cart.currency}',
+                          style: Theme.of(context).textTheme.headline4,
+                        )),
+                    // Shows all moves in a nice list
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: cartItems.length,
+                            itemBuilder: (context, index) =>
+                                FinancialMoveWidget(
+                                  descriptor: cartItems[index].descriptor,
+                                  balance: cartItems[index].balance,
+                                  currency: cart.currency,
+                                )))
+                  ],
+                );
               },
             )));
   }
