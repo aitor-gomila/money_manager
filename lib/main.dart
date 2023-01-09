@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }),
             body: Consumer<CartModel>(
               builder: (context, cart, child) {
+                List<FinancialMove> cartItems = cart.items.reversed.toList();
                 return Column(children: [
                   Padding(
                       padding: const EdgeInsets.symmetric(
@@ -66,13 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: cart.items.length,
+                    itemCount: cartItems.length,
                     itemBuilder: (context, index) {
-                      FinancialMove financialMove =
-                          cart.items.reversed.toList()[index];
+                      FinancialMove item = cartItems[index];
                       return FinancialMoveWidget(
-                        descriptor: financialMove.descriptor,
-                        balance: financialMove.balance.toString(),
+                        descriptor: item.descriptor,
+                        balance: item.balance.toString(),
                       );
                     },
                   )),
