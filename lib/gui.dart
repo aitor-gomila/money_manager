@@ -94,7 +94,7 @@ class MoveDialog extends StatelessWidget {
           },
         ),
         TextButton(
-          child: const Text("Move"),
+          child: const Text("Confirm"),
           onPressed: () {
             Navigator.pop(context);
             onMove(descriptor.text, int.parse(balance.text));
