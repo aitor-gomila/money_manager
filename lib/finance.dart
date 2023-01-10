@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // All types are the same and are based on the type 'Move',
 // their only purpose is to differenciate them when it is needed
 // Financial moves are immutable; borrow and debt can be cleared out
-class Move {
+abstract class Move {
   final String descriptor;
   final int balance;
   const Move({required this.descriptor, required this.balance});
