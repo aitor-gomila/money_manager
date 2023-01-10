@@ -13,7 +13,7 @@ class BalanceRoute extends StatefulWidget {
 class _BalanceRouteState extends State<BalanceRoute> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartModel>(
+    return Consumer<FinancialModel>(
       builder: ((context, cart, child) {
         List<FinancialMove> cartItems = cart.items.reversed.toList();
         return Column(

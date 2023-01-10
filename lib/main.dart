@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => CartModel()),
+          ChangeNotifierProvider(create: (context) => FinancialModel()),
           ChangeNotifierProvider(create: (context) => BorrowModel()),
           ChangeNotifierProvider(create: (context) => DebtModel()),
         ],
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // Floating action button that pops a dialog with many actions (add balance, substract balance, etc.)
       floatingActionButton:
-          Consumer<CartModel>(builder: (context, cart, child) {
+          Consumer<FinancialModel>(builder: (context, cart, child) {
         return FloatingActionButton(
           onPressed: () {
             showMoveDialog(context, cart);

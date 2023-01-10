@@ -63,7 +63,7 @@ class MoveDialog extends StatelessWidget {
       required this.onMove});
 
   final String title;
-  final CartModel cart;
+  final FinancialModel cart;
   final Function(String descriptor, int balance) onMove;
 
   @override
@@ -105,8 +105,8 @@ class MoveDialog extends StatelessWidget {
   }
 }
 
-void showPromptMoveDialog(BuildContext context, CartModel cart, String title,
-    Function(String, int) onMove) {
+void showPromptMoveDialog(BuildContext context, FinancialModel cart,
+    String title, Function(String, int) onMove) {
   showDialog<void>(
       context: context,
       builder: (context) => MoveDialog(
@@ -116,7 +116,7 @@ void showPromptMoveDialog(BuildContext context, CartModel cart, String title,
           ));
 }
 
-void showMoveDialog(BuildContext context, CartModel cart) {
+void showMoveDialog(BuildContext context, FinancialModel cart) {
   showDialog<void>(
       context: context,
       useSafeArea: false,
