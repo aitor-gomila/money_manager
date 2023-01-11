@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:financial_management/finance.dart';
 import 'package:financial_management/gui.dart';
 
-class BalanceRoute extends StatefulWidget {
-  const BalanceRoute({super.key});
+class DebtRoute extends StatefulWidget {
+  const DebtRoute({super.key});
 
   @override
-  State<BalanceRoute> createState() => _BalanceRouteState();
+  State<DebtRoute> createState() => _DebtRouteState();
 }
 
-class _BalanceRouteState extends State<BalanceRoute> {
+class _DebtRouteState extends State<DebtRoute> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Model>(

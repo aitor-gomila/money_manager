@@ -38,9 +38,3 @@ class Model extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-class FinancialModel extends Model {}
-
-class BorrowModel extends Model {}
-
-class DebtModel extends Model {}
