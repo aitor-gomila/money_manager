@@ -1,4 +1,6 @@
 import 'package:financial_management/routes/balance.dart';
+import 'package:financial_management/routes/borrow.dart';
+import 'package:financial_management/routes/debt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:financial_management/finance.dart';
@@ -14,12 +16,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => FinancialModel()),
-          ChangeNotifierProvider(create: (context) => BorrowModel()),
-          ChangeNotifierProvider(create: (context) => DebtModel()),
-        ],
+    return ChangeNotifierProvider(
+        create: (context) => Model(),
         builder: (context, child) => MaterialApp(
               title: 'Financial Moves',
               theme: ThemeData(
@@ -49,10 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Widget> widgetOptions = [
       const BalanceRoute(),
-      const Center(child: Text("Debt")),
-      const Center(
-        child: Text("Borrow"),
-      )
+      const DebtRoute(),
+      const BorrowRoute()
     ];
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:financial_management/finance.dart';
+import 'package:provider/provider.dart';
+
+typedef OnDoneFunction = void Function(
+    {required String descriptor, required int balance});
 
 class DialogItem extends StatelessWidget {
   const DialogItem(
@@ -57,56 +60,56 @@ class FinancialMoveWidget extends StatelessWidget {
 }
 
 class MoveDialog extends StatelessWidget {
-  const MoveDialog({super.key, required this.title});
+  const MoveDialog({super.key, required this.title, required this.onDone});
 
   final String title;
+  final OnDoneFunction onDone;
 
   @override
   Widget build(BuildContext context) {
     TextEditingController descriptor = TextEditingController();
     TextEditingController balance = TextEditingController();
-    return Consumer<Model>(builder: (context, cart, child) {
-      return AlertDialog(
-        title: Text(title),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: descriptor,
-              decoration: const InputDecoration(labelText: 'Description'),
-            ),
-            TextField(
-              controller: balance,
-              decoration: const InputDecoration(labelText: 'Balance (+/-)'),
-              keyboardType: TextInputType.number,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            child: const Text("Cancel"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+    return AlertDialog(
+      title: Text(title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: descriptor,
+            decoration: const InputDecoration(labelText: 'Description'),
           ),
-          TextButton(
-            child: const Text("Confirm"),
-            onPressed: () {
-              Navigator.pop(context);
-              cart.add(Move(
-                  balance: int.parse(balance.text),
-                  descriptor: descriptor.text));
-            },
-          )
+          TextField(
+            controller: balance,
+            decoration: const InputDecoration(labelText: 'Balance (+/-)'),
+            keyboardType: TextInputType.number,
+          ),
         ],
-      );
-    });
+      ),
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        TextButton(
+          child: const Text("Confirm"),
+          onPressed: () {
+            Navigator.pop(context);
+            onDone(
+                descriptor: descriptor.text, balance: int.parse(balance.text));
+          },
+        )
+      ],
+    );
   }
 }
 
-void showPromptMoveDialog(BuildContext context, String title) {
+void showPromptMoveDialog(BuildContext context,
+    {required String title, required OnDoneFunction onDone}) {
   showDialog<void>(
-      context: context, builder: (context) => MoveDialog(title: title));
+      context: context,
+      builder: (context) => MoveDialog(title: title, onDone: onDone));
 }
 
 void showMoveDialog(BuildContext context) {
@@ -114,28 +117,38 @@ void showMoveDialog(BuildContext context) {
       context: context,
       useSafeArea: false,
       builder: (BuildContext context) {
-        return SimpleDialog(title: const Text("Make move"), children: [
-          DialogItem(
-              icon: Icons.account_balance,
-              text: "Add/subtract balance",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(context, "Add/subtract");
-              }),
-          DialogItem(
-              icon: Icons.person,
-              text: "Debt",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(context, "Debt");
-              }),
-          DialogItem(
-              icon: Icons.attach_money,
-              text: "Borrow",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(context, "Borrow");
-              }),
-        ]);
+        return Consumer<Model>(builder: (context, cart, child) {
+          return SimpleDialog(title: const Text("Make move"), children: [
+            DialogItem(
+                icon: Icons.account_balance,
+                text: "Add/subtract balance",
+                onPressed: () {
+                  Navigator.pop(context);
+                  showPromptMoveDialog(context,
+                      title: "Add/subtract",
+                      onDone: (({required balance, required descriptor}) =>
+                          cart.add(
+                              Move(balance: balance, descriptor: descriptor))));
+                }),
+            DialogItem(
+                icon: Icons.person,
+                text: "Debt",
+                onPressed: () {
+                  Navigator.pop(context);
+                  showPromptMoveDialog(context,
+                      title: "Debt",
+                      onDone: (({required balance, required descriptor}) {}));
+                }),
+            DialogItem(
+                icon: Icons.attach_money,
+                text: "Borrow",
+                onPressed: () {
+                  Navigator.pop(context);
+                  showPromptMoveDialog(context,
+                      title: "Borrow",
+                      onDone: (({required balance, required descriptor}) {}));
+                }),
+          ]);
+        });
       });
 }
