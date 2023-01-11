@@ -1,5 +1,6 @@
-import 'package:financial_management/finance.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:financial_management/finance.dart';
 
 class DialogItem extends StatelessWidget {
   const DialogItem(
@@ -56,15 +57,10 @@ class FinancialMoveWidget extends StatelessWidget {
 }
 
 class MoveDialog extends StatelessWidget {
-  const MoveDialog(
-      {super.key,
-      required this.title,
-      required this.cart,
-      required this.onMove});
+  const MoveDialog({super.key, required this.title, required this.cart});
 
   final String title;
-  final FinancialModel cart;
-  final Function(String descriptor, int balance) onMove;
+  final Model cart;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +93,8 @@ class MoveDialog extends StatelessWidget {
           child: const Text("Confirm"),
           onPressed: () {
             Navigator.pop(context);
-            onMove(descriptor.text, int.parse(balance.text));
+            cart.add(Move(
+                balance: int.parse(balance.text), descriptor: descriptor.text));
           },
         )
       ],
@@ -105,51 +102,47 @@ class MoveDialog extends StatelessWidget {
   }
 }
 
-void showPromptMoveDialog(BuildContext context, FinancialModel cart,
-    String title, Function(String, int) onMove) {
+void showPromptMoveDialog(BuildContext context, String title, Model cart) {
   showDialog<void>(
       context: context,
-      builder: (context) => MoveDialog(
-            title: title,
-            cart: cart,
-            onMove: onMove,
-          ));
+      builder: (context) => MoveDialog(title: title, cart: cart));
 }
 
-void showMoveDialog(BuildContext context, FinancialModel cart) {
+void showMoveDialog(BuildContext context) {
   showDialog<void>(
       context: context,
       useSafeArea: false,
       builder: (BuildContext context) {
         return SimpleDialog(title: const Text("Make move"), children: [
-          DialogItem(
-              icon: Icons.account_balance,
-              text: "Add/subtract balance",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(
-                    context,
-                    cart,
-                    "Add/subtract balance",
-                    (descriptor, balance) => cart.add(FinancialMove(
-                        descriptor: descriptor, balance: balance)));
-              }),
-          DialogItem(
-              icon: Icons.attach_money,
-              text: "Lend balance",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(
-                    context, cart, "Lend balance", (descriptor, balance) {});
-              }),
-          DialogItem(
-              icon: Icons.person,
-              text: "Balance exception",
-              onPressed: () {
-                Navigator.pop(context);
-                showPromptMoveDialog(context, cart, "Balance exception",
-                    (descriptor, balance) {});
-              }),
+          Consumer<FinancialModel>(builder: (context, cart, child) {
+            return DialogItem(
+                icon: Icons.account_balance,
+                text: "Add/subtract balance",
+                onPressed: () {
+                  Navigator.pop(context);
+                  showPromptMoveDialog(context, "Add/subtract", cart);
+                });
+          }),
+          Consumer<DebtModel>(
+            builder: ((context, cart, child) {
+              return DialogItem(
+                  icon: Icons.person,
+                  text: "Debt",
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showPromptMoveDialog(context, "Debt", cart);
+                  });
+            }),
+          ),
+          Consumer<BorrowModel>(builder: ((context, cart, child) {
+            return DialogItem(
+                icon: Icons.attach_money,
+                text: "Borrow",
+                onPressed: () {
+                  Navigator.pop(context);
+                  showPromptMoveDialog(context, "Borrow", cart);
+                });
+          }))
         ]);
       });
 }

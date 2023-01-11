@@ -14,8 +14,8 @@ class _BalanceRouteState extends State<BalanceRoute> {
   @override
   Widget build(BuildContext context) {
     return Consumer<FinancialModel>(
-      builder: ((context, cart, child) {
-        List<FinancialMove> cartItems = cart.items.reversed.toList();
+      builder: (context, cart, child) {
+        List<Move> cartItems = cart.items.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -23,7 +23,7 @@ class _BalanceRouteState extends State<BalanceRoute> {
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
                 // Shows current balance with a nice + or - sign
                 child: Text(
-                  '${cart.total > 0 ? '+' : ''}${cart.total}${cart.currency}',
+                  '${cart.total > 0 ? '+' : ''}${cart.total}$currency',
                   style: Theme.of(context).textTheme.headline4,
                 )),
             // Shows all moves in a nice list
@@ -37,11 +37,11 @@ class _BalanceRouteState extends State<BalanceRoute> {
                         child: FinancialMoveWidget(
                           descriptor: cartItems[index].descriptor,
                           balance: cartItems[index].balance,
-                          currency: cart.currency,
+                          currency: currency,
                         ))))
           ],
         );
-      }),
+      },
     );
   }
 }

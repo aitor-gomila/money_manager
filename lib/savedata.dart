@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:financial_management/finance.dart';
 
 abstract class ConfigModel {
-  List<FinancialMove> financialMoves;
-  List<DebtMove> debtMove;
-  List<BorrowMove> borrowMoves;
+  List<Move> financialMoves;
+  List<Move> debtMove;
+  List<Move> borrowMoves;
   ConfigModel(
       {required this.financialMoves,
       required this.debtMove,

@@ -59,16 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("Financial Moves"),
       ),
       // Floating action button that pops a dialog with many actions (add balance, substract balance, etc.)
-      floatingActionButton:
-          Consumer<FinancialModel>(builder: (context, cart, child) {
-        return FloatingActionButton(
-          onPressed: () {
-            showMoveDialog(context, cart);
-          },
-          tooltip: 'Make a change',
-          child: const Icon(Icons.add),
-        );
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showMoveDialog(context);
+        },
+        tooltip: 'Make a change',
+        child: const Icon(Icons.add),
+      ),
       body: widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
