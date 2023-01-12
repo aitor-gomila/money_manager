@@ -15,7 +15,7 @@ class _BorrowRouteState extends State<BorrowRoute> {
   Widget build(BuildContext context) {
     return Consumer<Model>(
       builder: (context, cart, child) {
-        List<Move> cartItems = cart.items.reversed.toList();
+        List<Move> borrowItems = cart.borrowItems.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -31,12 +31,12 @@ class _BorrowRouteState extends State<BorrowRoute> {
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: cartItems.length,
+                    itemCount: borrowItems.length,
                     itemBuilder: (context, index) => InkWell(
                         onTap: () {},
                         child: FinancialMoveWidget(
-                          descriptor: cartItems[index].descriptor,
-                          balance: cartItems[index].balance,
+                          descriptor: borrowItems[index].descriptor,
+                          balance: borrowItems[index].balance,
                           currency: currency,
                         ))))
           ],
