@@ -55,7 +55,8 @@ class Model extends ChangeNotifier {
   void borrowAdd(Move item) {
     // Add negative balance to balance, add to borrow; then clear out
     _items.add(Move(descriptor: item.descriptor, balance: -item.balance));
-    _debtItems.add(item);
+    _borrowItems.add(item);
+    notifyListeners();
   }
 
   void borrowClear(int index) {

@@ -137,7 +137,9 @@ void showMoveDialog(BuildContext context) {
                   Navigator.pop(context);
                   showPromptMoveDialog(context,
                       title: "Debt",
-                      onDone: (({required balance, required descriptor}) {}));
+                      onDone: (({required balance, required descriptor}) =>
+                          cart.debtAdd(
+                              Move(balance: balance, descriptor: descriptor))));
                 }),
             DialogItem(
                 icon: Icons.attach_money,
@@ -146,7 +148,9 @@ void showMoveDialog(BuildContext context) {
                   Navigator.pop(context);
                   showPromptMoveDialog(context,
                       title: "Borrow",
-                      onDone: (({required balance, required descriptor}) {}));
+                      onDone: (({required balance, required descriptor}) =>
+                          cart.borrowAdd(
+                              Move(balance: balance, descriptor: descriptor))));
                 }),
           ]);
         });

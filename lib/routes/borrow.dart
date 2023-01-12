@@ -23,7 +23,7 @@ class _BorrowRouteState extends State<BorrowRoute> {
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
                 // Shows current balance with a nice + or - sign
                 child: Text(
-                  '${cart.total > 0 ? '+' : ''}${cart.total}$currency',
+                  '${cart.borrowTotal > 0 ? '+' : ''}${cart.borrowTotal}$currency',
                   style: Theme.of(context).textTheme.headline4,
                 )),
             // Shows all moves in a nice list
