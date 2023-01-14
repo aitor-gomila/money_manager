@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:io';
 import 'package:financial_management/finance.dart';
+import 'package:path_provider/path_provider.dart';
 
 abstract class ConfigModel {
   List<Move> financialMoves;
@@ -19,7 +20,7 @@ abstract class SaveData {
 }
 
 class FileSaveData extends SaveData {
-  final String saveDataPath = "";
+  String saveDataPath = "";
 
   @override
   Future<ConfigModel> read() async {
@@ -32,7 +33,11 @@ class FileSaveData extends SaveData {
     File(saveDataPath).writeAsString(jsonEncode(saveData));
   }
 
-  FileSaveData();
+  FileSaveData() {
+    getApplicationDocumentsDirectory().then((directory) {
+      saveDataPath = directory.path;
+    });
+  }
 }
 
 class WebStorageSaveData extends SaveData {
