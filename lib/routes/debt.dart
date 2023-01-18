@@ -13,9 +13,9 @@ class DebtRoute extends StatefulWidget {
 class _DebtRouteState extends State<DebtRoute> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Model>(
+    return Consumer<DebtModel>(
       builder: (context, cart, child) {
-        List<Move> debtItems = cart.debtItems.reversed.toList();
+        List<Move> debtItems = cart.Items.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -23,7 +23,7 @@ class _DebtRouteState extends State<DebtRoute> {
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
                 // Shows current balance with a nice + or - sign
                 child: Text(
-                  '${cart.debtTotal > 0 ? '+' : ''}${cart.debtTotal}$currency',
+                  '${cart.total > 0 ? '+' : ''}${cart.total}$currency',
                   style: Theme.of(context).textTheme.headline4,
                 )),
             // Shows all moves in a nice list

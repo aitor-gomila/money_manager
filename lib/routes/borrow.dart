@@ -13,9 +13,9 @@ class BorrowRoute extends StatefulWidget {
 class _BorrowRouteState extends State<BorrowRoute> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Model>(
+    return Consumer<BorrowModel>(
       builder: (context, cart, child) {
-        List<Move> borrowItems = cart.borrowItems.reversed.toList();
+        List<Move> borrowItems = cart.items.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -23,7 +23,7 @@ class _BorrowRouteState extends State<BorrowRoute> {
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 50),
                 // Shows current balance with a nice + or - sign
                 child: Text(
-                  '${cart.borrowTotal > 0 ? '+' : ''}${cart.borrowTotal}$currency',
+                  '${cart.total > 0 ? '+' : ''}${cart.total}$currency',
                   style: Theme.of(context).textTheme.headline4,
                 )),
             // Shows all moves in a nice list

@@ -3,8 +3,8 @@ import 'package:financial_management/routes/borrow.dart';
 import 'package:financial_management/routes/debt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:financial_management/finance.dart';
 import 'package:financial_management/gui.dart';
+import 'package:financial_management/finance.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +16,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => Model(),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<FinancialModel>(
+              create: (_) => FinancialModel()),
+          ChangeNotifierProvider<DebtModel>(create: (_) => DebtModel()),
+          ChangeNotifierProvider<BorrowModel>(create: (_) => BorrowModel()),
+        ],
         builder: (context, child) => MaterialApp(
               title: 'Financial Moves',
               theme: ThemeData(

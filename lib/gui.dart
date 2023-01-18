@@ -117,7 +117,8 @@ void showMoveDialog(BuildContext context) {
       context: context,
       useSafeArea: false,
       builder: (BuildContext context) {
-        return Consumer<Model>(builder: (context, cart, child) {
+        return Consumer3<FinancialModel, DebtModel, BorrowModel>(
+            builder: (context, financialCart, debtCart, borrowCart, child) {
           return SimpleDialog(title: const Text("Make move"), children: [
             DialogItem(
                 icon: Icons.account_balance,
@@ -127,7 +128,7 @@ void showMoveDialog(BuildContext context) {
                   showPromptMoveDialog(context,
                       title: "Add/subtract",
                       onDone: (({required balance, required descriptor}) =>
-                          cart.add(
+                          financialCart.add(
                               Move(balance: balance, descriptor: descriptor))));
                 }),
             DialogItem(
@@ -138,7 +139,7 @@ void showMoveDialog(BuildContext context) {
                   showPromptMoveDialog(context,
                       title: "Debt",
                       onDone: (({required balance, required descriptor}) =>
-                          cart.debtAdd(
+                          debtCart.add(
                               Move(balance: balance, descriptor: descriptor))));
                 }),
             DialogItem(
@@ -149,7 +150,7 @@ void showMoveDialog(BuildContext context) {
                   showPromptMoveDialog(context,
                       title: "Borrow",
                       onDone: (({required balance, required descriptor}) =>
-                          cart.borrowAdd(
+                          borrowCart.add(
                               Move(balance: balance, descriptor: descriptor))));
                 }),
           ]);
