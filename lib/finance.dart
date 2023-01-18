@@ -36,8 +36,8 @@ class FinancialModel extends ChangeNotifier {
 
 class DebtModel extends ChangeNotifier {
   final List<Move> _items = [];
-  List<Move> get Items => _items;
-  int get total => calculateTotalFinancialMoves(Items);
+  List<Move> get items => _items;
+  int get total => calculateTotalFinancialMoves(items);
 
   void add(Move item) {
     _items.add(item);

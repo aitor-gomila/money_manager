@@ -15,7 +15,7 @@ class _DebtRouteState extends State<DebtRoute> {
   Widget build(BuildContext context) {
     return Consumer<DebtModel>(
       builder: (context, cart, child) {
-        List<Move> debtItems = cart.Items.reversed.toList();
+        List<Move> debtItems = cart.items.reversed.toList();
         return Column(
           children: [
             Padding(
