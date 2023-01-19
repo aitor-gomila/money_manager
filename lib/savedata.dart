@@ -14,6 +14,22 @@ class ConfigModel {
   final List<Move> financialMoves;
   final List<Move> debtMoves;
   final List<Move> borrowMoves;
+
+  Map<String, dynamic> toObj() {
+    return {
+      'financialMoves': financialMoves,
+      'debtMoves': debtMoves,
+      'borrowMoves': borrowMoves
+    };
+  }
+
+  static fromObj(Map<String, dynamic> obj) {
+    return ConfigModel(
+        financialMoves: obj['financialMoves'].cast<Move>(),
+        debtMoves: obj['debtMoves'].cast<Move>(),
+        borrowMoves: obj['borrowMoves'].cast<Move>());
+  }
+
   ConfigModel(
       {required this.financialMoves,
       required this.debtMoves,
@@ -29,13 +45,14 @@ class FileSaveData extends SaveData {
   @override
   Future<void> write(ConfigModel settings) async {
     File file = File(await getPathToSaveData());
-    file.writeAsString(jsonEncode(settings));
+    file.writeAsString(jsonEncode(settings.toObj()));
   }
 
   @override
   Future<ConfigModel> read() async {
     File file = File(await getPathToSaveData());
-    return jsonDecode(await file.readAsString());
+    String plainText = await file.readAsString();
+    return ConfigModel.fromObj(jsonDecode(plainText));
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:financial_management/gui.dart';
 import 'package:financial_management/finance.dart';
+import 'package:financial_management/savedata.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,20 +17,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<FinancialModel>(
-              create: (_) => FinancialModel()),
-          ChangeNotifierProvider<DebtModel>(create: (_) => DebtModel()),
-          ChangeNotifierProvider<BorrowModel>(create: (_) => BorrowModel()),
-        ],
-        builder: (context, child) => MaterialApp(
-              title: 'Financial Moves',
-              theme: ThemeData(
-                primarySwatch: Colors.green,
-              ),
-              home: const MyHomePage(),
-            ));
+    return FutureBuilder(
+        future: saveData.read(),
+        builder: (context, snapshot) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<FinancialModel>(
+                      create: (_) => FinancialModel(
+                          initialItems: snapshot.data?.financialMoves ?? [])),
+                  ChangeNotifierProvider<DebtModel>(
+                      create: (_) => DebtModel(
+                          initialItems: snapshot.data?.debtMoves ?? [])),
+                  ChangeNotifierProvider<BorrowModel>(
+                      create: (_) => BorrowModel(
+                          initialItems: snapshot.data?.borrowMoves ?? [])),
+                ],
+                builder: (context, child) => MaterialApp(
+                      title: 'Financial Moves',
+                      theme: ThemeData(
+                        primarySwatch: Colors.green,
+                      ),
+                      home: const MyHomePage(),
+                    )));
   }
 }
 
@@ -50,6 +58,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    FinancialModel financialModel =
+        Provider.of<FinancialModel>(context, listen: false);
+    DebtModel debtModel = Provider.of<DebtModel>(context, listen: false);
+    BorrowModel borrowModel = Provider.of<BorrowModel>(context, listen: false);
+
+    saveData.write(ConfigModel(
+        financialMoves: financialModel.items,
+        debtMoves: debtModel.items,
+        borrowMoves: borrowModel.items));
+
     List<Widget> widgetOptions = [
       const BalanceRoute(),
       const DebtRoute(),

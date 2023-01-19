@@ -32,6 +32,12 @@ class FinancialModel extends ChangeNotifier {
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }
+
+  FinancialModel({required initialItems}) {
+    for (var item in initialItems) {
+      _items.add(item);
+    }
+  }
 }
 
 class DebtModel extends ChangeNotifier {
@@ -48,6 +54,12 @@ class DebtModel extends ChangeNotifier {
     _items.add(_items[index]);
     _items.removeAt(index);
     notifyListeners();
+  }
+
+  DebtModel({required initialItems}) {
+    for (var item in initialItems) {
+      _items.add(item);
+    }
   }
 }
 
@@ -69,5 +81,11 @@ class BorrowModel extends ChangeNotifier {
         Move(descriptor: borrowItem.descriptor, balance: borrowItem.balance));
     _items.removeAt(index);
     notifyListeners();
+  }
+
+  BorrowModel({required initialItems}) {
+    for (var item in initialItems) {
+      _items.add(item);
+    }
   }
 }
