@@ -31,10 +31,9 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
       - run: flutter build apk --release
-      - run: flutter build windows --release
       - uses: ncipollo/release-action@v1
         with:
-         artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/windows/runner/Release"
+         artifacts: "build/app/outputs/flutter-apk/app-release.apk"
          token: ${{ secrets.GITHUB_TOKEN }}
       - run: flutter build web --release
       - name: Setup Pages
