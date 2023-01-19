@@ -44,9 +44,15 @@ class MyApp extends StatelessWidget {
                       home: const MyHomePage(),
                     ));
           } else if (snapshot.hasError) {
-            return Text("Error! ${snapshot.error.toString()}");
+            return Center(
+                child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Text(
+                snapshot.error.toString(),
+              ),
+            ));
           } else {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }
