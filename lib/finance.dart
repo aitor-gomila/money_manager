@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 const String currency = '€';
 
@@ -17,6 +18,8 @@ int calculateTotalFinancialMoves(List<Move> movesList) {
 }
 
 class FinancialModel extends ChangeNotifier {
+  final BuildContext context;
+
   /// Internal, private state of the cart
   final List<Move> _items = [];
 
@@ -33,7 +36,7 @@ class FinancialModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  FinancialModel({required initialItems}) {
+  FinancialModel({required initialItems, required this.context}) {
     for (var item in initialItems) {
       _items.add(item);
     }
@@ -41,6 +44,7 @@ class FinancialModel extends ChangeNotifier {
 }
 
 class DebtModel extends ChangeNotifier {
+  final BuildContext context;
   final List<Move> _items = [];
   List<Move> get items => _items;
   int get total => calculateTotalFinancialMoves(items);
@@ -52,11 +56,11 @@ class DebtModel extends ChangeNotifier {
 
   void remove(int index) {
     _items.add(_items[index]);
-    _items.removeAt(index);
+    Provider.of<FinancialModel>(context, listen: false)._items.removeAt(index);
     notifyListeners();
   }
 
-  DebtModel({required initialItems}) {
+  DebtModel({required initialItems, required this.context}) {
     for (var item in initialItems) {
       _items.add(item);
     }
@@ -64,6 +68,7 @@ class DebtModel extends ChangeNotifier {
 }
 
 class BorrowModel extends ChangeNotifier {
+  final BuildContext context;
   final List<Move> _items = [];
   List<Move> get items => _items;
   int get total => calculateTotalFinancialMoves(items);
@@ -71,7 +76,7 @@ class BorrowModel extends ChangeNotifier {
   void add(Move item) {
     // Add negative balance to balance, add to borrow; then clear out
     _items.add(Move(descriptor: item.descriptor, balance: -item.balance));
-    _items.add(item);
+    Provider.of<FinancialModel>(context, listen: false).items.add(item);
     notifyListeners();
   }
 
@@ -79,11 +84,11 @@ class BorrowModel extends ChangeNotifier {
     Move borrowItem = _items[index];
     _items.add(
         Move(descriptor: borrowItem.descriptor, balance: borrowItem.balance));
-    _items.removeAt(index);
+    Provider.of<FinancialModel>(context, listen: false)._items.removeAt(index);
     notifyListeners();
   }
 
-  BorrowModel({required initialItems}) {
+  BorrowModel({required initialItems, required this.context}) {
     for (var item in initialItems) {
       _items.add(item);
     }

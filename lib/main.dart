@@ -17,18 +17,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<ConfigModel>(
         future: saveData.read(),
-        builder: (context, snapshot) => MultiProvider(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MultiProvider(
                 providers: [
                   ChangeNotifierProvider<FinancialModel>(
-                      create: (_) => FinancialModel(
+                      create: (context) => FinancialModel(
+                          context: context,
                           initialItems: snapshot.data?.financialMoves ?? [])),
                   ChangeNotifierProvider<DebtModel>(
-                      create: (_) => DebtModel(
+                      create: (context) => DebtModel(
+                          context: context,
                           initialItems: snapshot.data?.debtMoves ?? [])),
                   ChangeNotifierProvider<BorrowModel>(
-                      create: (_) => BorrowModel(
+                      create: (context) => BorrowModel(
+                          context: context,
                           initialItems: snapshot.data?.borrowMoves ?? [])),
                 ],
                 builder: (context, child) => MaterialApp(
@@ -37,7 +42,13 @@ class MyApp extends StatelessWidget {
                         primarySwatch: Colors.green,
                       ),
                       home: const MyHomePage(),
-                    )));
+                    ));
+          } else if (snapshot.hasError) {
+            return Text("Error! ${snapshot.error.toString()}");
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 }
 
@@ -49,10 +60,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
   void _onTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
@@ -85,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Make a change',
         child: const Icon(Icons.add),
       ),
-      body: widgetOptions.elementAt(_selectedIndex),
+      body: widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -94,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.attach_money), label: "Borrow")
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         onTap: _onTap,
       ),
     );
