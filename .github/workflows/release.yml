@@ -33,7 +33,7 @@ jobs:
       - run: flutter analyze
       - run: flutter build apk --release
       - run: flutter build windows --release
-      - uses: ncipollo/release-action@v2
+      - uses: ncipollo/release-action@v1
         with:
          artifacts: "build/app/outputs/flutter-apk/app.apk,build/windows/runner/Release"
          token: ${{ secrets.GITHUB_TOKEN }}
