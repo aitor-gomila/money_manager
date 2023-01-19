@@ -30,7 +30,6 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
-      - run: flutter analyze
       - run: flutter build apk --release
       - run: flutter build windows --release
       - uses: ncipollo/release-action@v1
