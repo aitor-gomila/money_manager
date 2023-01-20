@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:financial_management/finance.dart';
+import 'package:money_manager/finance.dart';
 import 'package:provider/provider.dart';
 
 typedef OnDoneFunction = void Function(

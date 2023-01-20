@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:financial_management/finance.dart';
-import 'package:financial_management/savedata/native.dart'
-    if (dart.library.html) 'package:financial_management/savedata/web.dart';
+import 'package:money_manager/finance.dart';
+import 'package:money_manager/savedata/native.dart'
+    if (dart.library.html) 'package:money_manager/savedata/web.dart';
 
 abstract class SaveData {
   static Obj defaultSaveData =

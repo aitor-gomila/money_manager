@@ -1,11 +1,11 @@
-import 'package:financial_management/routes/balance.dart';
-import 'package:financial_management/routes/borrow.dart';
-import 'package:financial_management/routes/debt.dart';
+import 'package:money_manager/routes/balance.dart';
+import 'package:money_manager/routes/borrow.dart';
+import 'package:money_manager/routes/debt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:financial_management/gui.dart';
-import 'package:financial_management/finance.dart';
-import 'package:financial_management/savedata.dart';
+import 'package:money_manager/gui.dart';
+import 'package:money_manager/finance.dart';
+import 'package:money_manager/savedata.dart';
 
 void main() {
   runApp(const MyApp());

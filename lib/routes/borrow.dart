@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:financial_management/finance.dart';
-import 'package:financial_management/gui.dart';
+import 'package:money_manager/finance.dart';
+import 'package:money_manager/gui.dart';
 
 class BorrowRoute extends StatefulWidget {
   const BorrowRoute({super.key});
