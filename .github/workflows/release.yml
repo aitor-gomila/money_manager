@@ -19,6 +19,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
       - run: flutter build web --release
       - name: Setup Pages
@@ -49,14 +53,24 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
       - run: flutter build apk --release
+      - run: flutter build linux --release
       - name: Compress linux directory
         run: tar czf build/linux/x64/release/bundle build/linux/x64/release/money_manager_linux_x64.tar.xz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-release
+          path: build/linux/x64/release/money_manager_linux_x64.tar.xz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk-release
+          path: build/app/outputs/flutter-apk/app-release.apk
   windows:
     name: Windows build
     runs-on: windows-latest
     env:
       FLUTTER_VERSION: "3.3.10"
     steps:
+    - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -64,11 +78,24 @@ jobs:
       - run: flutter build windows --release
       - name: Compress
         run: tar.exe -a -c -f build/windows/runner/money_manager_windows_x64.zip build/windows/runner/Release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows-release
+          path: build/windows/runner/money_manager_windows_x64.zip
   release:
     name: Release
     runs-on: ubuntu-latest
     needs: [windows, apk-linux]
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: linux-release
+      - uses: actions/download-artifact@v3
+        with:
+          name: apk-release
+      - uses: actions/download-artifact@v3
+        with:
+          name: windows-release
       - uses: ncipollo/release-action@v1
         with:
          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/linux/x64/release/money_manager_linux_x64.tar.xz,build/windows/runner/money_manager_windows_x64.zip"
