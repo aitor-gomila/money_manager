@@ -56,7 +56,7 @@ jobs:
       - run: sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev -y
       - run: flutter build linux --release
       - name: Compress linux directory
-        run: tar czf build/linux/x64/release/bundle build/linux/x64/release/money_manager_linux_x64.tar.xz
+        run: tar -c -f -z -v build/linux/x64/release/money_manager_linux_x64.tar.xz ./build/linux/x64/release/bundle
       - uses: actions/upload-artifact@v3
         with:
           name: linux-release
