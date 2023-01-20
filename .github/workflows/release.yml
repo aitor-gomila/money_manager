@@ -29,7 +29,7 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
       # TODO: replace base URL when deploying to GH pages
-      - run: flutter build web --release --base-href="https://dragondscript.github.io/money_manager/"
+      - run: flutter build web --release --base-href="/money_manager/"
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
