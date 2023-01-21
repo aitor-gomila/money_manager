@@ -54,9 +54,9 @@ class DebtModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(int index) {
-    _items.add(_items[index]);
-    Provider.of<FinancialModel>(context, listen: false)._items.removeAt(index);
+  void clear(int index) {
+    Provider.of<FinancialModel>(context, listen: false).add(_items[index]);
+    _items.removeAt(index);
     notifyListeners();
   }
 
@@ -75,16 +75,17 @@ class BorrowModel extends ChangeNotifier {
 
   void add(Move item) {
     // Add negative balance to balance, add to borrow; then clear out
-    _items.add(Move(descriptor: item.descriptor, balance: -item.balance));
-    Provider.of<FinancialModel>(context, listen: false).items.add(item);
+    Provider.of<FinancialModel>(context, listen: false)
+        .add(Move(descriptor: item.descriptor, balance: -item.balance));
+    _items.add(item);
     notifyListeners();
   }
 
-  void remove(int index) {
+  void clear(int index) {
     Move borrowItem = _items[index];
-    _items.add(
+    Provider.of<FinancialModel>(context, listen: false).add(
         Move(descriptor: borrowItem.descriptor, balance: borrowItem.balance));
-    Provider.of<FinancialModel>(context, listen: false)._items.removeAt(index);
+    _items.removeAt(index);
     notifyListeners();
   }
 
