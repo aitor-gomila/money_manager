@@ -1,4 +1,4 @@
-# Money Manager v1.0.0+2
+# Money Manager
 
 Money manager is an app that lets you save and spend money in a visual way.
 
