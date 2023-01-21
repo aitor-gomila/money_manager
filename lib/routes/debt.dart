@@ -14,11 +14,15 @@ class DebtMoveWidget extends StatelessWidget {
       {super.key,
       required this.descriptor,
       required this.balance,
-      required this.currency});
+      required this.currency,
+      required this.onClear,
+      required this.onUnpaid});
 
   final String currency;
   final String descriptor;
   final int balance;
+  final VoidCallback onClear;
+  final VoidCallback onUnpaid;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,17 @@ class DebtMoveWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
+        Row(
+          children: [
+            ElevatedButton(
+              child: const Text("Unpaid"),
+              onPressed: () => onUnpaid(),
+            ),
+            Container(width: 5, color: Colors.transparent),
+            ElevatedButton(
+                child: const Text("Clear debt"), onPressed: () => onClear()),
+          ],
+        )
       ]),
     );
   }
@@ -53,13 +68,13 @@ class _DebtRouteState extends State<DebtRoute> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: debtItems.length,
-                    itemBuilder: (context, index) => InkWell(
-                        onTap: () {},
-                        child: DebtMoveWidget(
+                    itemBuilder: (context, index) => DebtMoveWidget(
                           descriptor: debtItems[index].descriptor,
                           balance: debtItems[index].balance,
                           currency: currency,
-                        ))))
+                          onClear: () => cart.clear(index),
+                          onUnpaid: () => cart.clearUnpaid(index),
+                        )))
           ],
         );
       },

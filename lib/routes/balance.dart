@@ -54,13 +54,11 @@ class _BalanceRouteState extends State<BalanceRoute> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: cartItems.length,
-                    itemBuilder: (context, index) => InkWell(
-                        onTap: () {},
-                        child: FinancialMoveWidget(
+                    itemBuilder: (context, index) => FinancialMoveWidget(
                           descriptor: cartItems[index].descriptor,
                           balance: cartItems[index].balance,
                           currency: currency,
-                        ))))
+                        )))
           ],
         );
       },
