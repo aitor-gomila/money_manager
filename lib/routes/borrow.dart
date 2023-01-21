@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_manager/finance.dart';
-import 'package:money_manager/gui.dart';
 
 class BorrowRoute extends StatefulWidget {
   const BorrowRoute({super.key});
 
   @override
   State<BorrowRoute> createState() => _BorrowRouteState();
+}
+
+class BorrowMoveWidget extends StatelessWidget {
+  const BorrowMoveWidget(
+      {super.key,
+      required this.descriptor,
+      required this.balance,
+      required this.currency});
+
+  final String currency;
+  final String descriptor;
+  final int balance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
+      ]),
+    );
+  }
 }
 
 class _BorrowRouteState extends State<BorrowRoute> {
@@ -34,7 +55,7 @@ class _BorrowRouteState extends State<BorrowRoute> {
                     itemCount: borrowItems.length,
                     itemBuilder: (context, index) => InkWell(
                         onTap: () {},
-                        child: FinancialMoveWidget(
+                        child: BorrowMoveWidget(
                           descriptor: borrowItems[index].descriptor,
                           balance: borrowItems[index].balance,
                           currency: currency,

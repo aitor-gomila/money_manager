@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_manager/finance.dart';
-import 'package:money_manager/gui.dart';
 
 class DebtRoute extends StatefulWidget {
   const DebtRoute({super.key});
 
   @override
   State<DebtRoute> createState() => _DebtRouteState();
+}
+
+class DebtMoveWidget extends StatelessWidget {
+  const DebtMoveWidget(
+      {super.key,
+      required this.descriptor,
+      required this.balance,
+      required this.currency});
+
+  final String currency;
+  final String descriptor;
+  final int balance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
+      ]),
+    );
+  }
 }
 
 class _DebtRouteState extends State<DebtRoute> {
@@ -34,7 +55,7 @@ class _DebtRouteState extends State<DebtRoute> {
                     itemCount: debtItems.length,
                     itemBuilder: (context, index) => InkWell(
                         onTap: () {},
-                        child: FinancialMoveWidget(
+                        child: DebtMoveWidget(
                           descriptor: debtItems[index].descriptor,
                           balance: debtItems[index].balance,
                           currency: currency,

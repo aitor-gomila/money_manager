@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_manager/finance.dart';
-import 'package:money_manager/gui.dart';
 
 class BalanceRoute extends StatefulWidget {
   const BalanceRoute({super.key});
 
   @override
   State<BalanceRoute> createState() => _BalanceRouteState();
+}
+
+class FinancialMoveWidget extends StatelessWidget {
+  const FinancialMoveWidget(
+      {super.key,
+      required this.descriptor,
+      required this.balance,
+      required this.currency});
+
+  final String currency;
+  final String descriptor;
+  final int balance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(descriptor),
+        Text('${balance > 0 ? '+' : ''}$balance$currency')
+      ]),
+    );
+  }
 }
 
 class _BalanceRouteState extends State<BalanceRoute> {
