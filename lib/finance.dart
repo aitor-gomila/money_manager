@@ -54,6 +54,11 @@ class DebtModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearUnpaid(int index) {
+    _items.removeAt(index);
+    notifyListeners();
+  }
+
   void clear(int index) {
     Provider.of<FinancialModel>(context, listen: false).add(_items[index]);
     _items.removeAt(index);
@@ -78,6 +83,11 @@ class BorrowModel extends ChangeNotifier {
     Provider.of<FinancialModel>(context, listen: false)
         .add(Move(descriptor: item.descriptor, balance: -item.balance));
     _items.add(item);
+    notifyListeners();
+  }
+
+  void clearUnpaid(int index) {
+    _items.removeAt(index);
     notifyListeners();
   }
 
