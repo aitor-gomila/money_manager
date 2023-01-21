@@ -34,9 +34,9 @@ class PlatformSaveData extends SaveData {
 
   @override
   Future<ConfigModel> read() async {
+    await nullCheckSaveFile();
     File file = File(await getPathToSaveData());
     String plainText = await file.readAsString();
-    await nullCheckSaveFile();
     return ConfigModel.fromObj(jsonDecode(plainText));
   }
 }
