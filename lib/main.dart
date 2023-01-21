@@ -3,7 +3,7 @@ import 'package:money_manager/routes/borrow.dart';
 import 'package:money_manager/routes/debt.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:money_manager/gui.dart';
+import 'package:money_manager/dialogs.dart';
 import 'package:money_manager/finance.dart';
 import 'package:money_manager/savedata.dart';
 
