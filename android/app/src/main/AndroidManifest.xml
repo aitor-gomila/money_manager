@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.money_manager">
+    package="org.dragonDScript.money_manager">
    <application
         android:label="money_manager"
         android:name="${applicationName}"

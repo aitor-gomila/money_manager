@@ -1,4 +1,4 @@
-package com.example.money_manager
+package org.dragonDScript.money_manager
 
 import io.flutter.embedding.android.FlutterActivity
 
