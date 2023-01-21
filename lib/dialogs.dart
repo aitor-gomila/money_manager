@@ -36,29 +36,6 @@ class DialogItem extends StatelessWidget {
   }
 }
 
-class FinancialMoveWidget extends StatelessWidget {
-  const FinancialMoveWidget(
-      {super.key,
-      required this.descriptor,
-      required this.balance,
-      required this.currency});
-
-  final String currency;
-  final String descriptor;
-  final int balance;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(descriptor),
-        Text('${balance > 0 ? '+' : ''}$balance$currency')
-      ]),
-    );
-  }
-}
-
 class MoveDialog extends StatelessWidget {
   const MoveDialog({super.key, required this.title, required this.onDone});
 
