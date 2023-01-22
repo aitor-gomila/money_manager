@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<FinancialModel>(context, listen: false);
     DebtModel debtModel = Provider.of<DebtModel>(context, listen: false);
     BorrowModel borrowModel = Provider.of<BorrowModel>(context, listen: false);
-
+    // TODO: not too sure about this
     saveData.write(ConfigModel(
         financialMoves: financialModel.items,
         debtMoves: debtModel.items,
