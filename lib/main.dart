@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
                 builder: (context, child) => MaterialApp(
                       title: 'Financial Moves',
                       theme: ThemeData(
-                        primarySwatch: Colors.green,
-                      ),
+                          primarySwatch: Colors.green, useMaterial3: true),
                       home: const MyHomePage(),
                     ));
           } else if (snapshot.hasError) {
@@ -102,16 +101,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       body: widgetOptions.elementAt(selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(
               icon: Icon(Icons.account_balance), label: "Balance"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Debt"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), label: "Borrow")
+          NavigationDestination(icon: Icon(Icons.person), label: "Debt"),
+          NavigationDestination(icon: Icon(Icons.attach_money), label: "Borrow")
         ],
-        currentIndex: selectedIndex,
-        onTap: _onTap,
+        selectedIndex: selectedIndex,
+        onDestinationSelected: _onTap,
       ),
     );
   }
