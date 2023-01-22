@@ -1,11 +1,19 @@
+import 'package:money_manager/widgets/future_save_data_read.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+
 import 'package:money_manager/routes/balance.dart';
 import 'package:money_manager/routes/borrow.dart';
 import 'package:money_manager/routes/debt.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:money_manager/dialogs.dart';
 import 'package:money_manager/finance.dart';
+
 import 'package:money_manager/savedata.dart';
+import 'package:money_manager/types/savedata.dart';
+
+import 'package:money_manager/widgets/main_navigation_bar.dart';
+import 'package:money_manager/widgets/main_state_providers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,42 +25,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ConfigModel>(
-        future: saveData.read(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<FinancialModel>(
-                      create: (context) => FinancialModel(
-                          context: context,
-                          initialItems: snapshot.data?.financialMoves ?? [])),
-                  ChangeNotifierProvider<DebtModel>(
-                      create: (context) => DebtModel(
-                          context: context,
-                          initialItems: snapshot.data?.debtMoves ?? [])),
-                  ChangeNotifierProvider<BorrowModel>(
-                      create: (context) => BorrowModel(
-                          context: context,
-                          initialItems: snapshot.data?.borrowMoves ?? [])),
-                ],
-                builder: (context, child) => MaterialApp(
-                      title: 'Financial Moves',
-                      theme: ThemeData(
-                          primarySwatch: Colors.green, useMaterial3: true),
-                      home: const MyHomePage(),
-                    ));
-          } else if (snapshot.hasError) {
-            return Center(
-                child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: Text(
-                snapshot.error.toString(),
-              ),
-            ));
-          }
-          return const Center(child: CircularProgressIndicator());
-        });
+    return FutureSaveDataRead(
+        builder: (configModel) => MainStateProviders(
+            configModel: configModel,
+            builder: (context, _) => MaterialApp(
+                  title: 'Financial Moves',
+                  theme: ThemeData(
+                      primarySwatch: Colors.green, useMaterial3: true),
+                  home: const MyHomePage(),
+                )));
   }
 }
 
@@ -65,11 +46,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
-  void _onTap(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,28 +65,25 @@ class _MyHomePageState extends State<MyHomePage> {
       const BorrowRoute()
     ];
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Financial Moves"),
-      ),
-      // Floating action button that pops a dialog with many actions (add balance, substract balance, etc.)
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showMoveDialog(context);
-        },
-        tooltip: 'Make a change',
-        child: const Icon(Icons.add),
-      ),
-      body: widgetOptions.elementAt(selectedIndex),
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-              icon: Icon(Icons.account_balance), label: "Balance"),
-          NavigationDestination(icon: Icon(Icons.person), label: "Debt"),
-          NavigationDestination(icon: Icon(Icons.attach_money), label: "Borrow")
-        ],
-        selectedIndex: selectedIndex,
-        onDestinationSelected: _onTap,
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Financial Moves"),
+        ),
+        // Floating action button that pops a dialog with many actions (add balance, substract balance, etc.)
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showMoveDialog(context);
+          },
+          tooltip: 'Make a change',
+          child: const Icon(Icons.add),
+        ),
+        body: widgetOptions.elementAt(selectedIndex),
+        bottomNavigationBar: MainNavigationBar(
+          selectedIndex: selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+        ));
   }
 }

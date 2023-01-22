@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/finance.dart';
 import 'package:provider/provider.dart';
+
+import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/finance.dart';
+
+// TODO: not sure about this
 
 typedef OnDoneFunction = void Function(
     {required String descriptor, required int balance});

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:money_manager/types/finance.dart';
 import 'package:money_manager/finance.dart';
 
 class DebtRoute extends StatefulWidget {
