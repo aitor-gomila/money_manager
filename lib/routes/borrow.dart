@@ -34,12 +34,12 @@ class BorrowMoveWidget extends StatelessWidget {
         Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
         Row(
           children: [
-            ElevatedButton(
+            TextButton(
               child: const Text("Unpaid"),
               onPressed: () => onUnpaid(),
             ),
             Container(width: 5, color: Colors.transparent),
-            ElevatedButton(
+            TextButton(
                 child: const Text("Clear debt"), onPressed: () => onClear()),
           ],
         )
