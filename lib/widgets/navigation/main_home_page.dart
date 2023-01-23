@@ -1,10 +1,10 @@
-import 'package:money_manager/widgets/navigation/main_move_dialog.dart';
+import 'package:money_manager/widgets/data/dialog/dialog_move.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:money_manager/widgets/routes/balance.dart';
-import 'package:money_manager/widgets/routes/borrow.dart';
-import 'package:money_manager/widgets/routes/debt.dart';
+import 'package:money_manager/widgets/navigation/routes/balance.dart';
+import 'package:money_manager/widgets/navigation/routes/borrow.dart';
+import 'package:money_manager/widgets/navigation/routes/debt.dart';
 
 import 'package:money_manager/types/finance.dart';
 
