@@ -10,7 +10,9 @@ import 'package:money_manager/types/finance.dart';
 
 import 'package:money_manager/widgets/navigation/main_navigation_bar.dart';
 
-import 'package:money_manager/data/finance.dart';
+import 'package:money_manager/data/finance/balance.dart';
+import 'package:money_manager/data/finance/debt.dart';
+import 'package:money_manager/data/finance/borrow.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -35,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
       "Borrow"
     ];
     List<Model> stateOptions = [
-      Provider.of<FinancialModel>(context, listen: false),
+      Provider.of<BalanceModel>(context, listen: false),
       Provider.of<DebtModel>(context, listen: false),
       Provider.of<BorrowModel>(context, listen: false),
     ];

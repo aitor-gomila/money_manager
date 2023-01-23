@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:money_manager/types/savedata.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_manager/data/finance.dart';
+import 'package:money_manager/data/finance/balance.dart';
+import 'package:money_manager/data/finance/debt.dart';
+import 'package:money_manager/data/finance/borrow.dart';
 
 class MainStateProviders extends StatelessWidget {
   const MainStateProviders(
@@ -14,8 +16,8 @@ class MainStateProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<FinancialModel>(
-          create: (context) => FinancialModel(
+      ChangeNotifierProvider<BalanceModel>(
+          create: (context) => BalanceModel(
               context: context, initialItems: configModel.financialMoves)),
       ChangeNotifierProvider<DebtModel>(
           create: (context) =>

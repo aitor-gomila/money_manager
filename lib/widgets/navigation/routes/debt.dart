@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:money_manager/types/finance.dart';
-import 'package:money_manager/data/finance.dart';
+
+import 'package:money_manager/data/finance/debt.dart';
 
 class DebtRoute extends StatefulWidget {
   const DebtRoute({super.key});
