@@ -3,7 +3,7 @@ import 'package:money_manager/types/finance.dart';
 
 abstract class SaveData {
   static Obj defaultSaveData =
-      ConfigModel(financialMoves: [], borrowMoves: [], debtMoves: []).toObj();
+      ConfigModel(balanceMoves: [], borrowMoves: [], debtMoves: []).toObj();
   static String defaultSaveDataString = jsonEncode(defaultSaveData);
   Future<void> write(ConfigModel settings);
   Future<ConfigModel> read();
@@ -12,7 +12,7 @@ abstract class SaveData {
 typedef Obj = Map<String, dynamic>;
 
 class ConfigModel {
-  final List<Move> financialMoves;
+  final List<Move> balanceMoves;
   final List<Move> debtMoves;
   final List<Move> borrowMoves;
 
@@ -25,20 +25,19 @@ class ConfigModel {
   }
 
   Obj toObj() => {
-        'financialMoves':
-            financialMoves.map<Obj>((e) => _moveToObj(e)).toList(),
+        'balanceMoves': balanceMoves.map<Obj>((e) => _moveToObj(e)).toList(),
         'debtMoves': debtMoves.map<Obj>((e) => _moveToObj(e)).toList(),
         'borrowMoves': borrowMoves.map<Obj>((e) => _moveToObj(e)).toList()
       };
 
   static ConfigModel fromObj(Obj obj) => ConfigModel(
-      financialMoves:
-          obj['financialMoves'].map<Move>((e) => _objToMove(e)).toList(),
+      balanceMoves:
+          obj['balanceMoves'].map<Move>((e) => _objToMove(e)).toList(),
       debtMoves: obj['debtMoves'].map<Move>((e) => _objToMove(e)).toList(),
       borrowMoves: obj['borrowMoves'].map<Move>((e) => _objToMove(e)).toList());
 
   ConfigModel(
-      {required this.financialMoves,
+      {required this.balanceMoves,
       required this.debtMoves,
       required this.borrowMoves});
 }

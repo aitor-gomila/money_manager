@@ -18,7 +18,7 @@ class MainStateProviders extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<BalanceModel>(
           create: (context) => BalanceModel(
-              context: context, initialItems: configModel.financialMoves)),
+              context: context, initialItems: configModel.balanceMoves)),
       ChangeNotifierProvider<DebtModel>(
           create: (context) =>
               DebtModel(context: context, initialItems: configModel.debtMoves)),

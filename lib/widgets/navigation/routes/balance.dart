@@ -12,8 +12,8 @@ class BalanceRoute extends StatefulWidget {
   State<BalanceRoute> createState() => _BalanceRouteState();
 }
 
-class FinancialMoveWidget extends StatelessWidget {
-  const FinancialMoveWidget(
+class BalanceMoveWidget extends StatelessWidget {
+  const BalanceMoveWidget(
       {super.key,
       required this.descriptor,
       required this.balance,
@@ -57,7 +57,7 @@ class _BalanceRouteState extends State<BalanceRoute> {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: cartItems.length,
-                    itemBuilder: (context, index) => FinancialMoveWidget(
+                    itemBuilder: (context, index) => BalanceMoveWidget(
                           descriptor: cartItems[index].descriptor,
                           balance: cartItems[index].balance,
                           currency: currency,
