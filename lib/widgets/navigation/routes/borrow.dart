@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:money_manager/finance.dart';
+
+import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/data/finance.dart';
 
 class BorrowRoute extends StatefulWidget {
   const BorrowRoute({super.key});
@@ -32,12 +34,12 @@ class BorrowMoveWidget extends StatelessWidget {
         Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
         Row(
           children: [
-            ElevatedButton(
+            TextButton(
               child: const Text("Unpaid"),
               onPressed: () => onUnpaid(),
             ),
             Container(width: 5, color: Colors.transparent),
-            ElevatedButton(
+            TextButton(
                 child: const Text("Clear debt"), onPressed: () => onClear()),
           ],
         )

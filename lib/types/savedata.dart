@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:money_manager/finance.dart';
-import 'package:money_manager/savedata/native.dart'
-    if (dart.library.html) 'package:money_manager/savedata/web.dart';
+import 'package:money_manager/types/finance.dart';
 
 abstract class SaveData {
   static Obj defaultSaveData =
@@ -44,5 +42,3 @@ class ConfigModel {
       required this.debtMoves,
       required this.borrowMoves});
 }
-
-SaveData saveData = PlatformSaveData();

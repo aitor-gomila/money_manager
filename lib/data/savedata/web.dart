@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:html';
 
-import 'package:money_manager/savedata.dart';
+import 'package:money_manager/types/savedata.dart';
 
 class PlatformSaveData extends SaveData {
   @override

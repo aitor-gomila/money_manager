@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:money_manager/finance.dart';
+
+import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/data/finance.dart';
 
 class BalanceRoute extends StatefulWidget {
   const BalanceRoute({super.key});
