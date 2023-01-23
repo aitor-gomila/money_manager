@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         builder: (configModel) => MainStateProviders(
             configModel: configModel,
             builder: (context, _) => MaterialApp(
-                  title: 'Financial Moves',
+                  title: 'Money manager',
                   theme: ThemeData(
                       primarySwatch: Colors.green, useMaterial3: true),
                   home: const MyHomePage(),
