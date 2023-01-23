@@ -1,4 +1,4 @@
-import 'package:money_manager/widgets/future_save_data_read.dart';
+import 'package:money_manager/widgets/dialogs.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +6,15 @@ import 'package:money_manager/routes/balance.dart';
 import 'package:money_manager/routes/borrow.dart';
 import 'package:money_manager/routes/debt.dart';
 
-import 'package:money_manager/dialogs.dart';
-import 'package:money_manager/finance.dart';
-
-import 'package:money_manager/savedata.dart';
 import 'package:money_manager/types/savedata.dart';
+import 'package:money_manager/types/finance.dart';
 
+import 'package:money_manager/widgets/future_save_data_read.dart';
 import 'package:money_manager/widgets/main_navigation_bar.dart';
 import 'package:money_manager/widgets/main_state_providers.dart';
+
+import 'package:money_manager/finance.dart';
+import 'package:money_manager/savedata.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,6 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
       const DebtRoute(),
       const BorrowRoute()
     ];
+    List<String> dialogTitleOptions = [
+      "Add/subtract balance",
+      "Debt",
+      "Borrow"
+    ];
+    List<Model> stateOptions = [
+      Provider.of<FinancialModel>(context, listen: false),
+      Provider.of<DebtModel>(context, listen: false),
+      Provider.of<BorrowModel>(context, listen: false),
+    ];
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Financial Moves"),
@@ -71,7 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
         // Floating action button that pops a dialog with many actions (add balance, substract balance, etc.)
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            showMoveDialog(context);
+            var provider = stateOptions.elementAt(selectedIndex);
+            showMoveDialog(context,
+                title: dialogTitleOptions.elementAt(selectedIndex),
+                onDone: ({required balance, required descriptor}) {
+              Move item = Move(balance: balance, descriptor: descriptor);
+              provider.add(item);
+            });
           },
           tooltip: 'Make a change',
           child: const Icon(Icons.add),

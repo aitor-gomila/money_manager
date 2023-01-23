@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:money_manager/types/finance.dart';
-import 'package:money_manager/finance.dart';
 
 // TODO: not sure about this
 
@@ -86,55 +82,9 @@ class MoveDialog extends StatelessWidget {
   }
 }
 
-void showPromptMoveDialog(BuildContext context,
+void showMoveDialog(BuildContext context,
     {required String title, required OnDoneFunction onDone}) {
   showDialog<void>(
       context: context,
       builder: (context) => MoveDialog(title: title, onDone: onDone));
-}
-
-void showMoveDialog(BuildContext context) {
-  showDialog<void>(
-      context: context,
-      useSafeArea: false,
-      builder: (BuildContext context) {
-        return Consumer3<FinancialModel, DebtModel, BorrowModel>(
-            builder: (context, financialCart, debtCart, borrowCart, child) {
-          return SimpleDialog(title: const Text("Make move"), children: [
-            DialogItem(
-                icon: Icons.account_balance,
-                text: "Add/subtract balance",
-                onPressed: () {
-                  Navigator.pop(context);
-                  showPromptMoveDialog(context,
-                      title: "Add/subtract",
-                      onDone: (({required balance, required descriptor}) =>
-                          financialCart.add(
-                              Move(balance: balance, descriptor: descriptor))));
-                }),
-            DialogItem(
-                icon: Icons.person,
-                text: "Debt",
-                onPressed: () {
-                  Navigator.pop(context);
-                  showPromptMoveDialog(context,
-                      title: "Debt",
-                      onDone: (({required balance, required descriptor}) =>
-                          debtCart.add(
-                              Move(balance: balance, descriptor: descriptor))));
-                }),
-            DialogItem(
-                icon: Icons.attach_money,
-                text: "Borrow",
-                onPressed: () {
-                  Navigator.pop(context);
-                  showPromptMoveDialog(context,
-                      title: "Borrow",
-                      onDone: (({required balance, required descriptor}) =>
-                          borrowCart.add(
-                              Move(balance: balance, descriptor: descriptor))));
-                }),
-          ]);
-        });
-      });
 }

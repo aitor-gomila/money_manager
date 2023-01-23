@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_manager/types/finance.dart';
 
-class FinancialModel extends ChangeNotifier {
+class FinancialModel extends Model with ChangeNotifier {
   final BuildContext context;
 
   /// Internal, private state of the cart
   final List<Move> _items = [];
 
   /// An unmodifiable view of the items in the cart
+  @override
   List<Move> get items => _items;
 
   /// The current total price of all items
@@ -17,6 +18,7 @@ class FinancialModel extends ChangeNotifier {
       .fold<int>(0, (previousValue, element) => previousValue + element);
 
   /// Adds [item] to cart
+  @override
   void add(Move item) {
     _items.add(item);
     // This call tells the widgets that are listening to this model to rebuild.
@@ -30,14 +32,16 @@ class FinancialModel extends ChangeNotifier {
   }
 }
 
-class DebtModel extends ChangeNotifier {
+class DebtModel extends Model with ChangeNotifier {
   final BuildContext context;
   final List<Move> _items = [];
+  @override
   List<Move> get items => _items;
   int get total => items
       .map(((e) => e.balance))
       .fold<int>(0, (previousValue, element) => previousValue + element);
 
+  @override
   void add(Move item) {
     _items.add(item);
     notifyListeners();
@@ -61,14 +65,16 @@ class DebtModel extends ChangeNotifier {
   }
 }
 
-class BorrowModel extends ChangeNotifier {
+class BorrowModel extends Model with ChangeNotifier {
   final BuildContext context;
   final List<Move> _items = [];
+  @override
   List<Move> get items => _items;
   int get total => items
       .map(((e) => e.balance))
       .fold<int>(0, (previousValue, element) => previousValue + element);
 
+  @override
   void add(Move item) {
     // Add negative balance to balance, add to borrow; then clear out
     Provider.of<FinancialModel>(context, listen: false)

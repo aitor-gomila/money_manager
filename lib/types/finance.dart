@@ -6,3 +6,8 @@ class Move {
   final int balance;
   const Move({required this.descriptor, required this.balance});
 }
+
+abstract class Model {
+  late List<Move> items;
+  void add(Move item);
+}
