@@ -14,9 +14,7 @@ class FutureSaveDataRead extends StatelessWidget {
         future: saveData.read(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            // TODO: i'm pretty sure this situation can't happen but better code is needed
-            // this one will overwrite all data the user has if something weird happens
-            return builder(snapshot.data ?? emptyConfigModel());
+            return builder(snapshot.data!);
           }
           if (snapshot.hasError) {
             return Center(

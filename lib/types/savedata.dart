@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:money_manager/types/finance.dart';
 
-// TODO: mixing abstract and implementation code here
 abstract class SaveData {
   static Obj defaultSaveData =
       ConfigModel(financialMoves: [], borrowMoves: [], debtMoves: []).toObj();
@@ -43,6 +42,3 @@ class ConfigModel {
       required this.debtMoves,
       required this.borrowMoves});
 }
-
-var emptyConfigModel =
-    () => ConfigModel(financialMoves: [], debtMoves: [], borrowMoves: []);
