@@ -6,12 +6,3 @@ class Move {
   final int balance;
   const Move({required this.descriptor, required this.balance});
 }
-
-// TODO: not sure about this function
-int calculateTotalMoves(List<int> movesList) {
-  int total = 0;
-  for (var move in movesList) {
-    total += move;
-  }
-  return total;
-}

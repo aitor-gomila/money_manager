@@ -12,8 +12,9 @@ class FinancialModel extends ChangeNotifier {
   List<Move> get items => _items;
 
   /// The current total price of all items
-  int get total =>
-      calculateTotalMoves(items.map<int>((e) => e.balance).toList());
+  int get total => items
+      .map(((e) => e.balance))
+      .fold<int>(0, (previousValue, element) => previousValue + element);
 
   /// Adds [item] to cart
   void add(Move item) {
@@ -33,8 +34,9 @@ class DebtModel extends ChangeNotifier {
   final BuildContext context;
   final List<Move> _items = [];
   List<Move> get items => _items;
-  int get total =>
-      calculateTotalMoves(items.map<int>((e) => e.balance).toList());
+  int get total => items
+      .map(((e) => e.balance))
+      .fold<int>(0, (previousValue, element) => previousValue + element);
 
   void add(Move item) {
     _items.add(item);
@@ -63,8 +65,9 @@ class BorrowModel extends ChangeNotifier {
   final BuildContext context;
   final List<Move> _items = [];
   List<Move> get items => _items;
-  int get total =>
-      calculateTotalMoves(items.map<int>((e) => e.balance).toList());
+  int get total => items
+      .map(((e) => e.balance))
+      .fold<int>(0, (previousValue, element) => previousValue + element);
 
   void add(Move item) {
     // Add negative balance to balance, add to borrow; then clear out
