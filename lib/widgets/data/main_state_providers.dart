@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:money_manager/types/savedata.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_manager/finance.dart';
+import 'package:money_manager/data/finance.dart';
 
 class MainStateProviders extends StatelessWidget {
   const MainStateProviders(

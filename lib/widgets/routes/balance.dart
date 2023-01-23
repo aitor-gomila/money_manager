@@ -2,58 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:money_manager/types/finance.dart';
-import 'package:money_manager/finance.dart';
+import 'package:money_manager/data/finance.dart';
 
-class DebtRoute extends StatefulWidget {
-  const DebtRoute({super.key});
+class BalanceRoute extends StatefulWidget {
+  const BalanceRoute({super.key});
 
   @override
-  State<DebtRoute> createState() => _DebtRouteState();
+  State<BalanceRoute> createState() => _BalanceRouteState();
 }
 
-class DebtMoveWidget extends StatelessWidget {
-  const DebtMoveWidget(
+class FinancialMoveWidget extends StatelessWidget {
+  const FinancialMoveWidget(
       {super.key,
       required this.descriptor,
       required this.balance,
-      required this.currency,
-      required this.onClear,
-      required this.onUnpaid});
+      required this.currency});
 
   final String currency;
   final String descriptor;
   final int balance;
-  final VoidCallback onClear;
-  final VoidCallback onUnpaid;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 50),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text('$descriptor · ${balance > 0 ? '+' : ''}$balance$currency'),
-        Row(
-          children: [
-            TextButton(
-              child: const Text("Unpaid"),
-              onPressed: () => onUnpaid(),
-            ),
-            Container(width: 5, color: Colors.transparent),
-            TextButton(
-                child: const Text("Clear debt"), onPressed: () => onClear()),
-          ],
-        )
+        Text(descriptor),
+        Text('${balance > 0 ? '+' : ''}$balance$currency')
       ]),
     );
   }
 }
 
-class _DebtRouteState extends State<DebtRoute> {
+class _BalanceRouteState extends State<BalanceRoute> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DebtModel>(
+    return Consumer<FinancialModel>(
       builder: (context, cart, child) {
-        List<Move> debtItems = cart.items.reversed.toList();
+        List<Move> cartItems = cart.items.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -69,13 +55,11 @@ class _DebtRouteState extends State<DebtRoute> {
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: debtItems.length,
-                    itemBuilder: (context, index) => DebtMoveWidget(
-                          descriptor: debtItems[index].descriptor,
-                          balance: debtItems[index].balance,
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, index) => FinancialMoveWidget(
+                          descriptor: cartItems[index].descriptor,
+                          balance: cartItems[index].balance,
                           currency: currency,
-                          onClear: () => cart.clear(index),
-                          onUnpaid: () => cart.clearUnpaid(index),
                         )))
           ],
         );
