@@ -24,8 +24,8 @@ class DebtMoveWidget extends StatelessWidget {
   final String currency;
   final String descriptor;
   final int balance;
-  final VoidCallback onClear;
-  final VoidCallback onUnpaid;
+  final void Function() onClear;
+  final void Function() onUnpaid;
 
   @override
   Widget build(BuildContext context) {
@@ -84,3 +84,5 @@ class _DebtRouteState extends State<DebtRoute> {
     );
   }
 }
+
+AppBar Function() getDebtAppBar = () => AppBar(title: const Text("Debt"));

@@ -84,3 +84,16 @@ class _BorrowRouteState extends State<BorrowRoute> {
     );
   }
 }
+
+class BorrowAppBar extends StatelessWidget {
+  const BorrowAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text("Borrow"),
+    );
+  }
+}
+
+AppBar Function() getBorrowAppBar = () => AppBar(title: const Text("Borrow"));
