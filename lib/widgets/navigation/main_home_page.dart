@@ -1,5 +1,6 @@
 import 'package:money_manager/data/savedata/savedata.dart';
 import 'package:money_manager/types/savedata.dart';
+import 'package:money_manager/widgets/data/dialog/dialog_move.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import 'package:money_manager/widgets/navigation/routes/balance.dart';
 import 'package:money_manager/widgets/navigation/routes/borrow.dart';
 import 'package:money_manager/widgets/navigation/routes/debt.dart';
 
-import 'package:money_manager/widgets/navigation/main_navigation_bar.dart';
+import 'package:money_manager/types/finance.dart';
 
 import 'package:money_manager/data/finance/balance.dart';
 import 'package:money_manager/data/finance/debt.dart';
@@ -51,15 +52,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> dialogTitleOptions = [
-      "Add/subtract balance",
-      "Debt",
-      "Borrow"
+    List<NavigationDestination> navigationOptions = [
+      const NavigationDestination(
+          icon: Icon(Icons.account_balance), label: "Balance"),
+      const NavigationDestination(icon: Icon(Icons.person), label: "Debt"),
+      const NavigationDestination(
+          icon: Icon(Icons.attach_money), label: "Borrow"),
     ];
     List<AppBar> appBarOptions = [
-      getBalanceAppBar(),
-      getDebtAppBar(),
-      getBorrowAppBar()
+      getBalanceAppBar(() => showMoveDialog(context,
+          title: "Balance",
+          onDone: ({required balance, required descriptor}) =>
+              Provider.of<BalanceModel>(context, listen: false)
+                  .add(Move(descriptor: descriptor, balance: balance)))),
+      getDebtAppBar(() => showMoveDialog(context,
+          title: "Debt",
+          onDone: ({required balance, required descriptor}) =>
+              Provider.of<DebtModel>(context, listen: false)
+                  .add(Move(descriptor: descriptor, balance: balance)))),
+      getBorrowAppBar(() => showMoveDialog(context,
+          title: "Borrow",
+          onDone: ({required balance, required descriptor}) =>
+              Provider.of<BorrowModel>(context, listen: false)
+                  .add(Move(descriptor: descriptor, balance: balance))))
     ];
 
     return Scaffold(
@@ -69,7 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
           const DebtRoute(),
           const BorrowRoute()
         ][selectedIndex],
-        bottomNavigationBar: MainNavigationBar(
+        bottomNavigationBar: NavigationBar(
+          destinations: navigationOptions,
           selectedIndex: selectedIndex,
           onDestinationSelected: (index) {
             setState(() {

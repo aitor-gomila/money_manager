@@ -85,4 +85,12 @@ class _BorrowRouteState extends State<BorrowRoute> {
   }
 }
 
-AppBar Function() getBorrowAppBar = () => AppBar(title: const Text("Borrow"));
+AppBar Function(VoidCallback) getBorrowAppBar = (onAddButtonPressed) => AppBar(
+      title: const Text("Borrow"),
+      actions: [
+        IconButton(
+          onPressed: onAddButtonPressed,
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );

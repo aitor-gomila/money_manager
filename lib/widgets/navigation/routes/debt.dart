@@ -85,4 +85,10 @@ class _DebtRouteState extends State<DebtRoute> {
   }
 }
 
-AppBar Function() getDebtAppBar = () => AppBar(title: const Text("Debt"));
+AppBar Function(VoidCallback) getDebtAppBar =
+    (onAddButtonPressed) => AppBar(title: const Text("Debt"), actions: [
+          IconButton(
+            onPressed: onAddButtonPressed,
+            icon: const Icon(Icons.add),
+          )
+        ]);

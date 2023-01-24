@@ -69,4 +69,12 @@ class _BalanceRouteState extends State<BalanceRoute> {
   }
 }
 
-AppBar Function() getBalanceAppBar = () => AppBar(title: const Text("Balance"));
+AppBar Function(VoidCallback) getBalanceAppBar = (onAddButtonPressed) => AppBar(
+      title: const Text("Balance"),
+      actions: [
+        IconButton(
+          onPressed: onAddButtonPressed,
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
