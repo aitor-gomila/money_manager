@@ -69,15 +69,4 @@ class _BalanceRouteState extends State<BalanceRoute> {
   }
 }
 
-class BalanceAppBar extends StatelessWidget {
-  const BalanceAppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text('Balance'),
-    );
-  }
-}
-
 AppBar Function() getBalanceAppBar = () => AppBar(title: const Text("Balance"));
