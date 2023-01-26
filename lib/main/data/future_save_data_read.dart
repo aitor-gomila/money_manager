@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:money_manager/types/savedata.dart';
-import 'package:money_manager/data/savedata/savedata.dart';
+import 'package:money_manager/savedata/types.dart';
+import 'package:money_manager/savedata/savedata.dart';
 
 class FutureSaveDataRead extends StatelessWidget {
   FutureSaveDataRead({super.key, required this.builder});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/finance/data/types.dart';
 
 class BalanceModel extends Model with ChangeNotifier {
   final BuildContext context;

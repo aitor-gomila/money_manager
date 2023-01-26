@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/finance/data/types.dart';
 
 abstract class SaveData {
   static Obj defaultSaveData =

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/types/savedata.dart';
+import 'package:money_manager/savedata/types.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_manager/data/finance/balance.dart';
-import 'package:money_manager/data/finance/debt.dart';
-import 'package:money_manager/data/finance/borrow.dart';
+import 'package:money_manager/finance/data/balance.dart';
+import 'package:money_manager/finance/data/debt.dart';
+import 'package:money_manager/finance/data/borrow.dart';
 
 class MainStateProviders extends StatelessWidget {
   const MainStateProviders(

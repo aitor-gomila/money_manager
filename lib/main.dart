@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:money_manager/widgets/data/future_save_data_read.dart';
-import 'package:money_manager/widgets/data/main_state_providers.dart';
+import 'package:money_manager/main/data/future_save_data_read.dart';
+import 'package:money_manager/main/data/main_state_providers.dart';
 
-import 'package:money_manager/widgets/navigation/main_home_page.dart';
+import 'package:money_manager/main/widgets/main_home_page.dart';
 
 void main() {
   runApp(const MyApp());

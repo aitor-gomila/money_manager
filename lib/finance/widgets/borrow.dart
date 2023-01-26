@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_manager/types/finance.dart';
+import 'package:money_manager/finance/data/types.dart';
 
-import 'package:money_manager/data/finance/debt.dart';
+import 'package:money_manager/finance/data/borrow.dart';
 
-class DebtRoute extends StatefulWidget {
-  const DebtRoute({super.key});
+class BorrowRoute extends StatefulWidget {
+  const BorrowRoute({super.key});
 
   @override
-  State<DebtRoute> createState() => _DebtRouteState();
+  State<BorrowRoute> createState() => _BorrowRouteState();
 }
 
-class DebtMoveWidget extends StatelessWidget {
-  const DebtMoveWidget(
+class BorrowMoveWidget extends StatelessWidget {
+  const BorrowMoveWidget(
       {super.key,
       required this.descriptor,
       required this.balance,
@@ -24,8 +24,8 @@ class DebtMoveWidget extends StatelessWidget {
   final String currency;
   final String descriptor;
   final int balance;
-  final void Function() onClear;
-  final void Function() onUnpaid;
+  final VoidCallback onClear;
+  final VoidCallback onUnpaid;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +49,12 @@ class DebtMoveWidget extends StatelessWidget {
   }
 }
 
-class _DebtRouteState extends State<DebtRoute> {
+class _BorrowRouteState extends State<BorrowRoute> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DebtModel>(
+    return Consumer<BorrowModel>(
       builder: (context, cart, child) {
-        List<Move> debtItems = cart.items.reversed.toList();
+        List<Move> borrowItems = cart.items.reversed.toList();
         return Column(
           children: [
             Padding(
@@ -70,10 +70,10 @@ class _DebtRouteState extends State<DebtRoute> {
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: debtItems.length,
-                    itemBuilder: (context, index) => DebtMoveWidget(
-                          descriptor: debtItems[index].descriptor,
-                          balance: debtItems[index].balance,
+                    itemCount: borrowItems.length,
+                    itemBuilder: (context, index) => BorrowMoveWidget(
+                          descriptor: borrowItems[index].descriptor,
+                          balance: borrowItems[index].balance,
                           currency: currency,
                           onClear: () => cart.clear(index),
                           onUnpaid: () => cart.clearUnpaid(index),
@@ -85,10 +85,12 @@ class _DebtRouteState extends State<DebtRoute> {
   }
 }
 
-AppBar Function(VoidCallback) getDebtAppBar =
-    (onAddButtonPressed) => AppBar(title: const Text("Debt"), actions: [
-          IconButton(
-            onPressed: onAddButtonPressed,
-            icon: const Icon(Icons.add),
-          )
-        ]);
+AppBar Function(VoidCallback) getBorrowAppBar = (onAddButtonPressed) => AppBar(
+      title: const Text("Borrow"),
+      actions: [
+        IconButton(
+          onPressed: onAddButtonPressed,
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
